@@ -1,8 +1,8 @@
 package com.seriouscompany.business.java.fizzbuzz.packagenamingpackage.impl.math.arithmetics;
 
 import com.seriouscompany.business.java.fizzbuzz.packagenamingpackage.impl.ApplicationContextHolder;
-import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -10,18 +10,17 @@ import org.springframework.stereotype.Service;
 import com.seriouscompany.business.java.fizzbuzz.packagenamingpackage.impl.strategies.comparators.integercomparator.IntegerForEqualityComparator;
 
 @Service
-public class NumberIsMultipleOfAnotherNumberVerifier {
+public class NumberIsMultipleOfAnotherNumberVerifier implements InitializingBean {
 
 	private static IntegerDivider integerDivider;
 
 	@Autowired
 	private ApplicationContextHolder applicationContextHolder;
 
-	@PostConstruct
 	public void init() {
 		final ApplicationContext applicationContext = applicationContextHolder.getApplicationContext();
 
-		this.integerDivider = applicationContext.getBean(IntegerDivider.class);
+		NumberIsMultipleOfAnotherNumberVerifier.integerDivider = applicationContext.getBean(IntegerDivider.class);
 	}
 
 	public static boolean numberIsMultipleOfAnotherNumber(final int nFirstNumber, final int nSecondNumber) {
@@ -41,4 +40,8 @@ public class NumberIsMultipleOfAnotherNumberVerifier {
 		}
 	}
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        init();
+    }
 }

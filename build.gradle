@@ -1,8 +1,20 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'war'
+apply plugin: 'liberty'
 
 repositories {
     jcenter()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'net.wasdev.wlp.gradle.plugins:liberty-gradle-plugin:+'
+    }
 }
 
 sourceSets {
@@ -17,13 +29,25 @@ sourceSets {
 }
 
 dependencies {
-    compile 'org.springframework:spring-aop:3.2.13.RELEASE',
-            'org.springframework:spring-beans:3.2.13.RELEASE',
-            'org.springframework:spring-context:3.2.13.RELEASE',
-            'org.springframework:spring-core:3.2.13.RELEASE',
-            'org.springframework:spring-expression:3.2.13.RELEASE'
+    compile 'org.springframework:spring-aop:5.1.0.RELEASE',
+            'org.springframework:spring-beans:5.1.0.RELEASE',
+            'org.springframework:spring-context:5.1.0.RELEASE',
+            'org.springframework:spring-core:5.1.0.RELEASE',
+            'org.springframework:spring-expression:5.1.0.RELEASE',
+            'javax:javaee-api:8.0'
 
     testCompile 'junit:junit:4.8.2'
+
+    libertyRuntime 'io.openliberty:openliberty-runtime:18.0.0.3'
 }
+
+liberty {
+    server {
+        dropins = [war]
+    }
+}
+
+clean.dependsOn 'libertyStop'
+libertyStart.dependsOn 'libertyStop'
 
 mainClassName = 'com.seriouscompany.business.java.fizzbuzz.packagenamingpackage.impl.Main'

@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javax.servlet.annotation.WebServlet;
 import java.io.*;
 
-@WebServlet("/")
+@WebServlet("/servlet")
 public class FizzBuzzServlet extends javax.servlet.http.HttpServlet {
     private PrintStream out;
     private FizzBuzz fb;

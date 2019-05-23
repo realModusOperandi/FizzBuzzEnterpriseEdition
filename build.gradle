@@ -17,6 +17,9 @@ buildscript {
     }
 }
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 sourceSets {
     main {
         java {
@@ -38,7 +41,7 @@ dependencies {
 
     testCompile 'junit:junit:4.8.2'
 
-    libertyRuntime 'io.openliberty:openliberty-runtime:18.0.0.3'
+    libertyRuntime 'io.openliberty:openliberty-runtime:19.0.0.4'
 }
 
 liberty {
